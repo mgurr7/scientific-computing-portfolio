@@ -10,6 +10,14 @@ calculation of correlation functions and emission spectra.
 Developed during PhD in Electrical and Photonics Engeneering.
 '''
 
+
+'''
+Master equation for reaction coordinate polariton condensate. 
+QuTiP is used for setting up the Hilbert space and operators. The standard functionality for solving the master equation with
+QuTiP cannot be used, because the reservoir density and temperature/energy must be solved self-consistently.
+Emission spectrum from the two-time average <p^\dagger(t+tau) p(t)>.
+'''
+
 import numpy as np
 from scipy.integrate import solve_ivp
 import qutip as qt
@@ -21,7 +29,7 @@ import matplotlib.pyplot as plt
 ################################################################################
 # CONSTANTS AND PARAMETERS
 # all units are in SI
-device = 'cuda'
+device = 'cpu'
 parameter_obj = parameters_ode.material_parameters()
 hbar= parameter_obj.h_bar
 kB = parameter_obj.k_B
@@ -268,7 +276,7 @@ W_in = Gamma_in_ME_ss+Gamma_in_corr_ME_ss
 W_out = Gamma_out_1_ME_ss+Gamma_out_2_ME_ss+Gamma_in_corr_ME_ss+Gamma_out_corr_ME_ss+ gamma_LP
 
 # Data to save
-output_dir = "output_file_ode__ME"
+output_dir = "output_file_ode_ME"
 
 data_to_save = {
     "N0.p": [time, N0_out],
