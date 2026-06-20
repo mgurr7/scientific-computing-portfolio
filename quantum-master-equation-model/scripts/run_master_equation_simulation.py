@@ -472,6 +472,7 @@ ax[1].set_xlabel(r'Frequency $\omega - \omega_{LP} \:\mathrm{[rad\:s^{-1}]}$')
 ax[1].set_ylabel(r'Emission spectrum, $S(\omega)$')
 
 plt.tight_layout()
+plt.show()
 
 
 ################################################################################
@@ -519,7 +520,7 @@ plt.plot(tau, g2)
 plt.xlabel(r'$\tau$ [s]')
 plt.ylabel(r'Second-order corr. func. $g^{(2)}(\tau)$')
 plt.tight_layout()
-
+plt.show()
 
 ################################################################################
 # PARTICLE NUMBER DISTRIBUTION
@@ -545,4 +546,5 @@ plt.ylabel(r'Probability, $p_n$')
 plt.gca().set_yscale('log')
 
 plt.show()
+
 
