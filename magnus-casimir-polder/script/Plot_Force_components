@@ -1,0 +1,57 @@
+import pandas as pd
+import matplotlib.pyplot as plt
+plt.rcParams['mathtext.fontset'] = 'cm'
+plt.rcParams['font.family'] = 'serif'
+import sys
+import numpy as np
+
+# --- Filenames (adjust if different) ---
+f_s_file = "force_vs_velocity_f_sym.csv"
+f_as_file = "force_vs_velocity_f_as.csv"
+f_total_file = "force_vs_velocity_f_tot.csv"
+
+f_s_nonlocal_file = "force_vs_velocity_f_sym_nonlocal.csv"
+f_as_nonlocal_file = "force_vs_velocity_f_as_nonlocal.csv"
+f_total_nonlocal_file = "force_vs_velocity_f_tot_nonlocal.csv"
+
+# --- Load data ---
+df_fs = pd.read_csv(f_s_file)       # Columns: v, f_m
+df_fas = pd.read_csv(f_as_file)   # Columns: v, F_prova
+df_ftot = pd.read_csv(f_total_file) 
+
+df_nonlocal_fs = pd.read_csv(f_s_nonlocal_file)       # Columns: v, f_m
+df_nonlocal_fas = pd.read_csv(f_as_nonlocal_file)   # Columns: v, F_prova
+df_nonlocal_ftot = pd.read_csv(f_total_nonlocal_file) 
+
+# --- Prepare data ---
+v_vals = df_fs['v']
+f_s = df_fs['f_sym']
+f_as = df_fas['f_as']
+f_tot = df_ftot['f_tot']
+
+v_vals_nonlocal = df_nonlocal_fs['v_nonlocal']
+f_s_nonlocal = df_nonlocal_fs['f_sym_nonlocal']
+f_as_nonlocal = df_nonlocal_fas['f_as_nonlocal']
+f_tot_nonlocal = df_nonlocal_ftot['f_tot_nonlocal']
+
+# --- Plot on log-log scale ---
+plt.figure(figsize=(8,4))
+plt.loglog(v_vals, np.abs(f_tot), '--', label='$-\mathit{a}{\mathrm{Th}}$', lw=2.5, color='green', linestyle='dashed')
+#plt.loglog(v_vals, np.abs(f_tot_nonlocal), '--', label='$-\mathbf{a}^{\mathrm{Th}}_{nl}$', lw=2.5, color='olive', linestyle='dashed')
+
+plt.loglog(v_vals, np.abs(f_s), '--', label='$-\mathit{a}_{\mathrm{s}}$', lw=2.5, color='gold')
+#plt.loglog(v_vals, np.abs(f_s_nonlocal), '--', label='$-\mathbf{a}^{\mathrm{s}}_{nl}$', lw=2.5, color='darkgoldenrod')
+
+plt.loglog(v_vals, np.abs(f_as), label='$\mathit{a}_{\mathrm{a}}$', lw=2, color='red')
+#plt.loglog(v_vals, np.abs(f_as_nonlocal), label='$\mathbf{a}^{\mathrm{a}}_{nl}$', lw=2, color='darkred', linestyle='dashed')
+for v, ft, fs, fa in zip(v_vals, f_tot, f_s, f_as):
+    print(f"v = {v:.5e} | f_as = {fs:.5e} | f_as_nonlocal = {fa:.5e}")
+
+plt.xlabel(r'$\text{v/c}$', fontsize=20) 
+plt.ylabel('Acceleration [$\mathrm{\u03BC}$m/$\mathrm{s^2}$]', fontsize=18)
+plt.title('C-P Thermal Acceleration', fontsize=18)
+#plt.grid(True, which='both', ls=':', alpha=0.5)
+plt.tick_params(axis='both', which='major', labelsize=18)
+plt.legend(fontsize=16)
+plt.tight_layout()
+plt.show()
