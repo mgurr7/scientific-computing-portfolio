@@ -147,7 +147,7 @@ function Green_function_I_cutoff(ω, p::GreenParams; rtol=1e-5)
     return antihermitian_part(G)
 end
 
-# Hermitian part of the Green tensor 
+# Gradient of the Hermitian part of the Green tensor 
 function Green_function_R_def(x, ω, p::GreenParams; rtol=1e-5)
   
     ξp = ω + x * p.v
@@ -163,7 +163,7 @@ function Green_function_R_def(x, ω, p::GreenParams; rtol=1e-5)
     return @SVector ComplexF64[pp11, pp13, pp22, pp33]
 end
 
-# Integration of the Hermitian part of the Green tensor over momentum
+# Integration of the Gradient of Hermitian part of the Green tensor over momentum
 function Green_function_R(ω, p::GreenParams; mode::Symbol = :cutoff, rtol=1e-5)
     integrand = x -> Green_function_R_def(x, ω, p)
     
